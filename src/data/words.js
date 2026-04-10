@@ -1,5 +1,6 @@
 // 양육 언어 사전 데이터 (30개)
 // category: 'parent' (부모) | 'child' (아이) | 'situation' (상황)
+// status: 'open' (대안 공모 중) | 'voting' (투표 중) | 'confirmed' (확정)
 
 export const WORDS = [
   // ── 부모를 향한 말 ──
@@ -10,9 +11,15 @@ export const WORDS = [
     meaning: '엄마+벌레(蟲). 아이를 키우는 엄마 전체를 비하',
     since: '2014~2015년~',
     why: "모든 엄마에게 낙인. '엄마' 자체가 혐오 대상이 됨",
-    alternatives: ['육아 동행자', '여정 중인 엄마'],
+    status: 'voting',
+    voteEnd: 'D-3',
+    totalVotes: 218,
+    proposals: [
+      { text: '육아 동행자', votes: 92 },
+      { text: '여정 중인 엄마', votes: 78 },
+      { text: '엄마라는 이름', votes: 48 },
+    ],
     confirmed: null,
-    votes: null,
   },
   {
     id: 2,
@@ -21,7 +28,12 @@ export const WORDS = [
     meaning: '아빠+벌레(蟲). 아빠의 육아 태도를 비하',
     since: '맘충 이후 파생',
     why: '육아 참여 자체를 조롱하는 문화',
-    alternatives: ['함께 키우는 아빠', '동행하는 아버지'],
+    status: 'open',
+    totalProposals: 24,
+    proposals: [
+      { text: '함께 키우는 아빠', votes: 12 },
+      { text: '동행하는 아버지', votes: 8 },
+    ],
     confirmed: null,
   },
   {
@@ -31,7 +43,14 @@ export const WORDS = [
     meaning: '경력 단절 여성. 출산·육아로 직장을 떠난 여성',
     since: '2010년대 중반~',
     why: '아이를 키운 시간이 이력서의 구멍이 됨',
-    alternatives: ['육아 경험자', '삶의 전환기를 거친 여성'],
+    status: 'voting',
+    voteEnd: 'D-7',
+    totalVotes: 156,
+    proposals: [
+      { text: '육아 경험자', votes: 67 },
+      { text: '삶의 전환기를 거친 여성', votes: 54 },
+      { text: '커리어 전환자', votes: 35 },
+    ],
     confirmed: null,
   },
   {
@@ -41,7 +60,13 @@ export const WORDS = [
     meaning: '육아 부담이 한쪽에만 집중되는 상황',
     since: '2010년대 중반~',
     why: "양육이 '혼자 감당해야 할 짐'으로 프레이밍",
-    alternatives: ['함께하는 양육', '공동 여정'],
+    status: 'open',
+    totalProposals: 47,
+    proposals: [
+      { text: '함께하는 양육', votes: 22 },
+      { text: '공동 여정', votes: 18 },
+      { text: '나누지 못한 돌봄', votes: 7 },
+    ],
     confirmed: null,
   },
   {
@@ -51,9 +76,13 @@ export const WORDS = [
     meaning: '지옥(Hell)+육아. 키우는 것이 지옥처럼 힘들다는 표현',
     since: '2010년대 중후반~',
     why: '매일을 소진의 전장으로 만드는 언어',
-    alternatives: ['성장의 여정'],
+    status: 'confirmed',
     confirmed: '성장의 여정',
-    votes: 187,
+    totalVotes: 187,
+    proposals: [
+      { text: '성장의 여정', votes: 187 },
+      { text: '함께 자라는 시간', votes: 92 },
+    ],
     isHot: true,
   },
   {
@@ -63,7 +92,14 @@ export const WORDS = [
     meaning: '아이 키우는 것을 전쟁에 비유',
     since: '2000년대~',
     why: "아이가 '적', 부모가 '전사'가 됨",
-    alternatives: ['육아 여정', '함께 자라는 시간'],
+    status: 'voting',
+    voteEnd: 'D-5',
+    totalVotes: 134,
+    proposals: [
+      { text: '육아 여정', votes: 58 },
+      { text: '함께 자라는 시간', votes: 47 },
+      { text: '아이와의 모험', votes: 29 },
+    ],
     confirmed: null,
   },
   {
@@ -73,7 +109,12 @@ export const WORDS = [
     meaning: '낳기 전부터 육아를 무서워하는 정서',
     since: '2020년대 본격 확산',
     why: '부모가 되기 전부터 실패를 예상하게 만드는 언어',
-    alternatives: ['새로운 여정의 시작', '육아 설렘'],
+    status: 'open',
+    totalProposals: 18,
+    proposals: [
+      { text: '새로운 여정의 시작', votes: 9 },
+      { text: '육아 설렘', votes: 5 },
+    ],
     confirmed: null,
   },
   {
@@ -83,7 +124,12 @@ export const WORDS = [
     meaning: '육아로 인한 극도의 소진 상태',
     since: '2010년대 후반~',
     why: '개인 문제로만 명명되면 구조적 지원이 사라짐',
-    alternatives: ['육아 재충전이 필요한 시간', '쉬어가는 여정'],
+    status: 'open',
+    totalProposals: 12,
+    proposals: [
+      { text: '육아 재충전이 필요한 시간', votes: 6 },
+      { text: '쉬어가는 여정', votes: 4 },
+    ],
     confirmed: null,
   },
   {
@@ -93,7 +139,11 @@ export const WORDS = [
     meaning: '엄마+알고리즘. 평생 육아에서 벗어나지 못하는 현실',
     since: '2020년대~',
     why: '엄마의 삶 전체를 육아의 굴레로 고정',
-    alternatives: ['엄마도 성장하는 여정'],
+    status: 'open',
+    totalProposals: 9,
+    proposals: [
+      { text: '엄마도 성장하는 여정', votes: 7 },
+    ],
     confirmed: null,
   },
   {
@@ -103,8 +153,16 @@ export const WORDS = [
     meaning: '아이 입장을 제한하는 공간',
     since: '2015년~, 2023년 전국 542곳',
     why: '"여기 어린이 돼?"라고 묻는 아이들을 만들어냄',
-    alternatives: ['예스키즈존', '아이 환영 공간'],
+    status: 'voting',
+    voteEnd: 'D-2',
+    totalVotes: 312,
+    proposals: [
+      { text: '예스키즈존', votes: 145 },
+      { text: '아이 환영 공간', votes: 112 },
+      { text: '모두의 공간', votes: 55 },
+    ],
     confirmed: null,
+    isHot: true,
   },
 
   // ── 아이를 향한 말 ──
@@ -115,10 +173,13 @@ export const WORDS = [
     meaning: "트위치 TTS '재민'에서 유래. 어린이 비하어",
     since: '2019~2020년~',
     why: '어린이 10명 중 7명이 비하 단어라고 인식 (초록우산재단)',
-    alternatives: ['꼬마 시민'],
+    status: 'confirmed',
     confirmed: '꼬마 시민',
-    votes: 234,
-    rank: 1,
+    totalVotes: 234,
+    proposals: [
+      { text: '꼬마 시민', votes: 234 },
+      { text: '어린 친구', votes: 102 },
+    ],
     isHot: true,
   },
   {
@@ -128,10 +189,17 @@ export const WORDS = [
     meaning: '초등학생 줄임말. 무개념의 대명사로 변질',
     since: '1990년대 후반~',
     why: '나이 자체가 비하의 근거가 됨',
-    alternatives: ['어린이 시민', '새싹이'],
-    confirmed: null,
-    isOpen: true,
+    status: 'voting',
     voteEnd: 'D-12',
+    totalVotes: 239,
+    proposals: [
+      { text: '꼬마 시민', votes: 89 },
+      { text: '초등 친구', votes: 67 },
+      { text: '새싹이', votes: 45 },
+      { text: '어린이 시민', votes: 38 },
+    ],
+    confirmed: null,
+    isHot: true,
   },
   {
     id: 13,
@@ -140,7 +208,12 @@ export const WORDS = [
     meaning: '급식+벌레(蟲). 중고등학생 극단적 비하어',
     since: '2010년대 초~',
     why: '청소년 전체를 혐오 대상으로 만드는 집단 낙인',
-    alternatives: ['성장기 시민', '내일의 어른'],
+    status: 'open',
+    totalProposals: 31,
+    proposals: [
+      { text: '성장기 시민', votes: 14 },
+      { text: '내일의 어른', votes: 11 },
+    ],
     confirmed: null,
   },
   {
@@ -150,7 +223,12 @@ export const WORDS = [
     meaning: "사춘기 청소년의 자아탐색을 '병'으로 규정",
     since: '일본 유래, 한국 2010년~',
     why: '정상적인 성장 과정을 질병 취급',
-    alternatives: ['자아탐색기', '성장통'],
+    status: 'open',
+    totalProposals: 22,
+    proposals: [
+      { text: '자아탐색기', votes: 11 },
+      { text: '성장통', votes: 8 },
+    ],
     confirmed: null,
   },
   {
@@ -160,7 +238,11 @@ export const WORDS = [
     meaning: '부모에게 비싼 것을 요구하는 자녀',
     since: '2010년대 초~',
     why: '부모-자녀 관계를 착취-피착취 구조로 만드는 언어',
-    alternatives: ['함께 고민하는 아이'],
+    status: 'open',
+    totalProposals: 7,
+    proposals: [
+      { text: '함께 고민하는 아이', votes: 5 },
+    ],
     confirmed: null,
   },
   {
@@ -170,7 +252,14 @@ export const WORDS = [
     meaning: '주식·골프·요리+어린이. 초보자를 아이에 빗댄 표현',
     since: '2020년대~',
     why: '어린이=미성숙·부족함의 은유 (아동권리보장원 순화 권고)',
-    alternatives: ['입문자', '초보자'],
+    status: 'voting',
+    voteEnd: 'D-9',
+    totalVotes: 178,
+    proposals: [
+      { text: '입문자', votes: 89 },
+      { text: '초보자', votes: 56 },
+      { text: '시작하는 사람', votes: 33 },
+    ],
     confirmed: null,
   },
   {
@@ -180,7 +269,12 @@ export const WORDS = [
     meaning: '손주를 돌보는 조부모가 겪는 신체적 고통',
     since: '2010년대~',
     why: "아이 돌봄을 '병'의 원인으로 만드는 표현",
-    alternatives: ['손주와의 여정', '세대를 잇는 돌봄'],
+    status: 'open',
+    totalProposals: 11,
+    proposals: [
+      { text: '손주와의 여정', votes: 7 },
+      { text: '세대를 잇는 돌봄', votes: 4 },
+    ],
     confirmed: null,
   },
 
@@ -192,7 +286,14 @@ export const WORDS = [
     meaning: '육아 전체를 지옥으로 표현',
     since: '2010년대 중반~',
     why: '아이와 함께하는 모든 순간을 고통으로 프레이밍',
-    alternatives: ['육아 여정의 험한 고개', '함께 넘는 고비'],
+    status: 'voting',
+    voteEnd: 'D-6',
+    totalVotes: 167,
+    proposals: [
+      { text: '육아 여정의 험한 고개', votes: 78 },
+      { text: '함께 넘는 고비', votes: 56 },
+      { text: '성장의 진통', votes: 33 },
+    ],
     confirmed: null,
   },
   {
@@ -202,8 +303,16 @@ export const WORDS = [
     meaning: '출산 후 개인의 삶이 종료된다는 인식',
     since: 'SNS 육아 담론에서 광범위하게 사용',
     why: '출산 기피의 핵심 서사',
-    alternatives: ['아이 낳으면 시작', '부모됨은 새로운 챕터'],
+    status: 'voting',
+    voteEnd: 'D-1',
+    totalVotes: 289,
+    proposals: [
+      { text: '아이 낳으면 시작', votes: 145 },
+      { text: '부모됨은 새로운 챕터', votes: 98 },
+      { text: '또 다른 나의 시작', votes: 46 },
+    ],
     confirmed: null,
+    isHot: true,
   },
   {
     id: 20,
@@ -212,7 +321,12 @@ export const WORDS = [
     meaning: '육아를 생존의 문제로 표현. 블로그·유튜브 제목으로 대중화',
     since: '2010년대 중반~',
     why: "매일을 '생존'으로 명명하면 성장과 기쁨이 보이지 않음",
-    alternatives: ['육아 성장기', '함께 자라는 기록'],
+    status: 'open',
+    totalProposals: 19,
+    proposals: [
+      { text: '육아 성장기', votes: 11 },
+      { text: '함께 자라는 기록', votes: 7 },
+    ],
     confirmed: null,
   },
   {
@@ -222,7 +336,12 @@ export const WORDS = [
     meaning: '자녀로 인해 개인 활동이 제한된다는 일상 표현',
     since: '일상 대화에서 광범위하게 사용',
     why: '아이를 제약의 원인으로 만드는 언어. 아이 스스로 짐이라고 느끼게 됨',
-    alternatives: ['아이와 함께 조율하며', '우리 시간을 맞춰가며'],
+    status: 'open',
+    totalProposals: 14,
+    proposals: [
+      { text: '아이와 함께 조율하며', votes: 8 },
+      { text: '우리 시간을 맞춰가며', votes: 5 },
+    ],
     confirmed: null,
   },
   {
@@ -232,7 +351,14 @@ export const WORDS = [
     meaning: '일하는 엄마가 느끼는 육아 미달에 대한 죄책감',
     since: '2010년대~',
     why: "'완벽한 엄마'라는 불가능한 기준이 만들어낸 언어",
-    alternatives: ['일하며 성장하는 엄마', '다양한 방식으로 사랑하는 엄마'],
+    status: 'voting',
+    voteEnd: 'D-4',
+    totalVotes: 198,
+    proposals: [
+      { text: '일하며 성장하는 엄마', votes: 92 },
+      { text: '다양한 방식으로 사랑하는 엄마', votes: 67 },
+      { text: '균형을 찾아가는 엄마', votes: 39 },
+    ],
     confirmed: null,
   },
   {
@@ -242,7 +368,12 @@ export const WORDS = [
     meaning: '아이를 부담·짐으로 표현',
     since: 'SNS·커뮤니티에서 솔직한 표현으로 통용',
     why: '부모-자녀 관계를 착취-피착취 구조로 만드는 언어',
-    alternatives: ['아이와 함께 지는 무게', '함께 걷는 동행'],
+    status: 'open',
+    totalProposals: 8,
+    proposals: [
+      { text: '아이와 함께 지는 무게', votes: 5 },
+      { text: '함께 걷는 동행', votes: 3 },
+    ],
     confirmed: null,
   },
   {
@@ -252,7 +383,9 @@ export const WORDS = [
     meaning: '부모 월급 기준으로 아이를 비하하는 표현',
     since: '2010년대 온라인 커뮤니티~',
     why: '경제력이 아이의 가치를 결정한다는 계급주의적 언어',
-    alternatives: ['이 언어의 소멸이 목표'],
+    status: 'open',
+    totalProposals: 5,
+    proposals: [{ text: '이 언어의 소멸이 목표', votes: 5 }],
     confirmed: null,
   },
   {
@@ -262,7 +395,12 @@ export const WORDS = [
     meaning: '육아로 인한 우울 상태',
     since: '산후우울증 이후 광범위하게 사용',
     why: "'육아 때문'으로만 명명하면 아이가 우울의 원인이 됨",
-    alternatives: ['지원이 필요한 시간', '함께 돌봄이 필요한 부모'],
+    status: 'open',
+    totalProposals: 16,
+    proposals: [
+      { text: '지원이 필요한 시간', votes: 9 },
+      { text: '함께 돌봄이 필요한 부모', votes: 5 },
+    ],
     confirmed: null,
   },
   {
@@ -272,7 +410,9 @@ export const WORDS = [
     meaning: '출산에 대한 후회를 공개적으로 표현',
     since: '2020년대 SNS에서 증가 중',
     why: '공개적 서사가 되면 아이에게 전달됨',
-    alternatives: ['지금 도움이 필요해'],
+    status: 'open',
+    totalProposals: 6,
+    proposals: [{ text: '지금 도움이 필요해', votes: 4 }],
     confirmed: null,
   },
   {
@@ -282,7 +422,14 @@ export const WORDS = [
     meaning: '35세 이상 출산을 의료적 위험으로 명명',
     since: '의료계에서 시작, 일상어로 확산',
     why: '경험 많은 나이에 부모가 되는 것을 결함으로 프레이밍',
-    alternatives: ['성숙한 출산', '준비된 부모됨'],
+    status: 'voting',
+    voteEnd: 'D-8',
+    totalVotes: 142,
+    proposals: [
+      { text: '성숙한 출산', votes: 67 },
+      { text: '준비된 부모됨', votes: 48 },
+      { text: '시간이 빚은 선택', votes: 27 },
+    ],
     confirmed: null,
   },
   {
@@ -292,7 +439,12 @@ export const WORDS = [
     meaning: '육아가 포함된 결혼 생활을 지옥으로 표현',
     since: '2010년대~',
     why: '아이가 자라는 공간인 가정이 고통의 공간이 됨',
-    alternatives: ['함께 만들어가는 가정', '어렵지만 성장하는 관계'],
+    status: 'open',
+    totalProposals: 13,
+    proposals: [
+      { text: '함께 만들어가는 가정', votes: 8 },
+      { text: '어렵지만 성장하는 관계', votes: 4 },
+    ],
     confirmed: null,
   },
   {
@@ -302,7 +454,9 @@ export const WORDS = [
     meaning: '여성을 출산의 도구로 취급하는 표현',
     since: '저출산 정책 담론에서 반어적으로 사용',
     why: '여성의 몸을 국가 정책의 수단으로 보는 시선',
-    alternatives: ['삶의 주체로서 선택하는 부모됨'],
+    status: 'open',
+    totalProposals: 7,
+    proposals: [{ text: '삶의 주체로서 선택하는 부모됨', votes: 5 }],
     confirmed: null,
   },
   {
@@ -312,7 +466,9 @@ export const WORDS = [
     meaning: '헬육아보다 강화된 표현. 살아있는 지옥으로 묘사',
     since: '2020년대 SNS~',
     why: '극단적 표현일수록 잠재적 부모들의 두려움이 커짐. 악순환의 언어',
-    alternatives: ['지금 당장 도움이 필요한 순간'],
+    status: 'open',
+    totalProposals: 4,
+    proposals: [{ text: '지금 당장 도움이 필요한 순간', votes: 3 }],
     confirmed: null,
   },
 ]
@@ -327,4 +483,16 @@ export const CATEGORY_COLORS = {
   parent: 'bg-orange/10 text-orange',
   child: 'bg-success/10 text-success',
   situation: 'bg-navy/10 text-navy',
+}
+
+export const STATUS_LABELS = {
+  open: '공모 중',
+  voting: '투표 중',
+  confirmed: '확정',
+}
+
+export const STATUS_COLORS = {
+  open: 'bg-warm/40 text-orange border-orange/30',
+  voting: 'bg-lavender/40 text-navy border-navy/30',
+  confirmed: 'bg-gold/30 text-navy border-gold',
 }
