@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookOpen } from 'lucide-react'
 import InlineTemperature from '../components/InlineTemperature'
+import LanguageConverter from '../components/LanguageConverter'
 import LiveParticipation from '../components/LiveParticipation'
 import WordCard from '../components/WordCard'
 import { WORDS, CATEGORY_LABELS } from '../data/words'
@@ -96,6 +97,9 @@ export default function MainPage() {
 
       {/* 양육 언어 온도 — 인라인 */}
       <InlineTemperature />
+
+      {/* Claude 기반 실시간 변환기 */}
+      <LanguageConverter />
 
       {/* 실시간 함께 만드는 말 */}
       <LiveParticipation />
