@@ -1,178 +1,151 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ThumbsUp, Send } from 'lucide-react'
-import ImpactCounter from '../components/ImpactCounter'
-import ReframingCard from '../components/ReframingCard'
+import { ArrowRight, BookOpen } from 'lucide-react'
+import InlineTemperature from '../components/InlineTemperature'
+import WordCard from '../components/WordCard'
+import { WORDS, CATEGORY_LABELS } from '../data/words'
 
-const CYNICAL_WORDS = [
-  '잼민이', '초딩', '헬육아', '급식충',
-  '경단녀', '중2병', '짐승', '맘충',
-]
-
-const PROPOSALS = [
-  { text: '꼬마 시민', votes: 89, rank: 1 },
-  { text: '초등 친구', votes: 67, rank: 2 },
-  { text: '새싹이', votes: 45, rank: 3 },
-  { text: '어린이 시민', votes: 38, rank: 4 },
-]
-
-const CHANGED_WORDS = [
-  { before: '잼민이', after: '꼬마 시민', count: 234, source: 'campaign', hot: true },
-  { before: '헬육아', after: '성장의 여정', count: 187, source: 'campaign', hot: true },
-  { before: '맘충', after: null, count: null, source: 'campaign', voting: true, month: '8월' },
+const CATEGORIES = [
+  { key: 'all', label: '전체' },
+  { key: 'parent', label: '부모' },
+  { key: 'child', label: '아이' },
+  { key: 'situation', label: '상황' },
 ]
 
 export default function MainPage() {
-  const [proposal, setProposal] = useState('')
-  const [votedIdx, setVotedIdx] = useState(null)
+  const [filter, setFilter] = useState('all')
+
+  const filteredWords =
+    filter === 'all' ? WORDS : WORDS.filter((w) => w.category === filter)
+
+  // 미리보기 — 6개만 노출하고 더보기로 사전 페이지로 이동
+  const previewWords = filteredWords.slice(0, 6)
 
   return (
     <div className="pb-24">
-      {/* A-1. 히어로 섹션 */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-navy via-navy-light to-navy px-6 pb-10 pt-16 text-center text-white">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(247,215,107,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(247,215,107,0.2) 0%, transparent 50%)',
-          }} />
+      {/* A-1. 히어로 섹션 — 30개 단어 */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-navy via-navy-light to-navy px-5 pb-12 pt-14 text-white">
+        <div className="absolute inset-0 opacity-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 20% 50%, rgba(247,215,107,0.4) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(247,215,107,0.3) 0%, transparent 50%)',
+            }}
+          />
         </div>
-        <div className="relative">
-          <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {CYNICAL_WORDS.map((word) => (
+        <div className="relative mx-auto max-w-lg">
+          {/* 단어들 */}
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+            {WORDS.map((entry) => (
               <span
-                key={word}
-                className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 font-serif text-base text-white/70 line-through decoration-gold/60"
+                key={entry.id}
+                className="rounded-full border border-white/15 bg-white/[0.07] px-3 py-1 font-serif text-[13px] text-white/60 line-through decoration-gold/50 decoration-[1.5px]"
               >
-                {word}
+                {entry.word}
               </span>
             ))}
           </div>
-          <h1 className="mt-8 font-serif text-2xl font-bold leading-snug tracking-tight text-white">
-            이 말들이<br />
-            <span className="text-gold">가벼운 말이 아닙니다.</span>
+
+          {/* 카피 */}
+          <h1 className="text-center font-serif text-[22px] font-bold leading-relaxed text-white">
+            생각 없이 가볍게 쓰였던 말,<br />
+            <span className="text-gold">진짜 괜찮은 걸까요?</span>
           </h1>
-          <a
-            href="#contest"
-            className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-gold px-6 py-3 text-sm font-bold text-navy transition-transform hover:scale-105 active:scale-95"
-          >
-            이 말, 바꿔봐요
-            <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
-        <div className="relative mt-8">
-          <ImpactCounter />
+
+          <p className="mt-4 text-center text-sm leading-relaxed text-white/70">
+            매일의 한 마디가 아이의 세상을 만듭니다.<br />
+            우리, 다정한 말로 다시 시작해봐요.
+          </p>
+
+          <div className="mt-7 flex justify-center">
+            <a
+              href="#dictionary"
+              className="inline-flex items-center gap-1.5 rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-navy transition-transform hover:scale-105 active:scale-95"
+            >
+              이 말, 바꿔봐요
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          {/* 임팩트 카운터 */}
+          <div className="mt-9 rounded-2xl border border-white/10 bg-white/5 px-6 py-5 text-center backdrop-blur-sm">
+            <p className="text-xs text-white/60">지금까지</p>
+            <p className="mt-1 font-serif">
+              <span className="text-3xl font-bold text-gold">247개</span>
+              <span className="ml-1 text-base text-white">의 말이 바뀌었습니다</span>
+            </p>
+            <div className="mt-3 flex items-center justify-center gap-4 text-[11px] text-white/60">
+              <span className="flex items-center gap-1">
+                <span className="inline-block h-2 w-2 rounded-full bg-orange" />
+                캠페인 47
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="inline-block h-2 w-2 rounded-full bg-gold" />
+                챗봇 132
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="inline-block h-2 w-2 rounded-full bg-success" />
+                크루 68
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* A-2. 이달의 공모 섹션 */}
-      <section id="contest" className="mx-auto max-w-lg px-5 pt-10">
+      {/* 양육 언어 온도 — 인라인 */}
+      <InlineTemperature />
+
+      {/* 양육 언어 사전 */}
+      <section id="dictionary" className="mx-auto max-w-lg px-5 pt-10">
         <div className="flex items-center justify-between">
-          <h2 className="font-serif text-xl font-bold text-navy">7월 공모</h2>
-          <span className="rounded-full bg-orange/10 px-3 py-1 text-xs font-semibold text-orange">
-            D-12
-          </span>
-        </div>
-
-        <div className="mt-5 rounded-2xl border border-border bg-white p-6 text-center">
-          <p className="font-serif text-2xl font-bold text-navy">"초딩"을</p>
-          <p className="mt-1 font-serif text-lg text-navy">뭘로 바꾸면 좋을까요?</p>
-          <p className="mt-3 text-sm text-text-secondary">
-            초등학생을 비하하는 이 표현,<br />
-            다정한 대안을 함께 만들어주세요
-          </p>
-
-          <div className="mt-5 flex gap-2">
-            <input
-              type="text"
-              value={proposal}
-              onChange={(e) => setProposal(e.target.value)}
-              placeholder="당신의 대안을 입력해주세요"
-              className="flex-1 rounded-xl border border-border bg-cream px-4 py-2.5 text-sm text-text placeholder:text-text-muted focus:border-navy focus:outline-none focus:ring-1 focus:ring-navy"
-            />
-            <button className="flex items-center gap-1 rounded-xl bg-navy px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-light">
-              <Send className="h-3.5 w-3.5" />
-              제안
-            </button>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
+              Malbit Dictionary
+            </p>
+            <h2 className="mt-1 font-serif text-2xl font-bold text-navy">양육 언어 사전</h2>
           </div>
-
-          <p className="mt-4 text-xs text-text-muted">156건의 대안이 제안되었습니다</p>
+          <BookOpen className="h-6 w-6 text-navy" />
         </div>
+        <p className="mt-2 text-sm text-text-secondary">
+          냉소의 말을 다정한 말로 바꿔가는 살아있는 사전입니다
+        </p>
 
-        {/* 투표 목록 */}
-        <div className="mt-4 space-y-2">
-          {PROPOSALS.map((p, i) => (
+        {/* 카테고리 필터 */}
+        <div className="mt-5 flex gap-1.5">
+          {CATEGORIES.map((c) => (
             <button
-              key={i}
-              onClick={() => setVotedIdx(i)}
-              className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition-all ${
-                votedIdx === i
-                  ? 'border-navy bg-navy-06'
-                  : 'border-border bg-white hover:border-navy/30'
+              key={c.key}
+              onClick={() => setFilter(c.key)}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition-colors ${
+                filter === c.key
+                  ? 'bg-navy text-white'
+                  : 'border border-border bg-white text-text-secondary hover:border-navy/30'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <span
-                  className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
-                    p.rank === 1
-                      ? 'bg-gold text-navy'
-                      : 'bg-cream-dark text-text-muted'
-                  }`}
-                >
-                  {p.rank}
-                </span>
-                <span className="font-medium text-text">{p.text}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-text-muted">{p.votes}표</span>
-                <ThumbsUp
-                  className={`h-4 w-4 ${
-                    votedIdx === i ? 'text-navy' : 'text-text-muted'
-                  }`}
-                />
-              </div>
+              {c.label}
+              <span className="ml-1 text-[10px] opacity-60">
+                {c.key === 'all'
+                  ? WORDS.length
+                  : WORDS.filter((w) => w.category === c.key).length}
+              </span>
             </button>
           ))}
         </div>
-      </section>
 
-      {/* A-3. 지금까지 바뀐 말들 */}
-      <section className="mx-auto max-w-lg px-5 pt-12">
-        <h2 className="font-serif text-xl font-bold text-navy">지금까지 바뀐 말들</h2>
+        {/* 단어 카드 리스트 */}
         <div className="mt-4 space-y-3">
-          {CHANGED_WORDS.map((item, i) =>
-            item.voting ? (
-              <div
-                key={i}
-                className="flex items-center justify-between rounded-2xl border border-dashed border-orange/40 bg-orange/5 px-5 py-4"
-              >
-                <div>
-                  <span className="font-serif text-base font-medium text-text">{item.before}</span>
-                  <span className="mx-2 text-text-muted">→</span>
-                  <span className="text-sm text-orange">투표 진행 중</span>
-                  <span className="ml-2 rounded-full bg-orange/10 px-2 py-0.5 text-[11px] text-orange">
-                    📮 {item.month} 공모
-                  </span>
-                </div>
-                <button className="rounded-lg bg-orange px-3 py-1.5 text-xs font-semibold text-white">
-                  참여
-                </button>
-              </div>
-            ) : (
-              <ReframingCard
-                key={i}
-                before={item.before}
-                after={item.after}
-                source={item.source}
-                count={item.count}
-              />
-            )
-          )}
+          {previewWords.map((entry) => (
+            <WordCard key={entry.id} entry={entry} />
+          ))}
         </div>
 
+        {/* 더보기 */}
         <Link
           to="/dictionary"
-          className="mt-6 flex items-center justify-center gap-1 py-3 text-sm font-medium text-navy transition-colors hover:text-navy-light"
+          className="mt-5 flex items-center justify-center gap-2 rounded-2xl border-2 border-navy bg-white py-4 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white"
         >
-          양육 언어 사전 전체 보기
+          전체 {WORDS.length}개 단어 모두 보기
           <ArrowRight className="h-4 w-4" />
         </Link>
       </section>

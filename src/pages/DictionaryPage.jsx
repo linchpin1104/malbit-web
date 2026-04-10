@@ -1,44 +1,65 @@
 import { useState } from 'react'
-import { Search } from 'lucide-react'
-import ImpactCounter from '../components/ImpactCounter'
-import ReframingCard from '../components/ReframingCard'
+import { Search, BookOpen } from 'lucide-react'
+import WordCard from '../components/WordCard'
+import { WORDS } from '../data/words'
 
-const FILTERS = ['전체', '캠페인', '챗봇', '크루']
-const SORT_OPTIONS = ['인기순', '최신순']
-
-const ENTRIES = [
-  { before: '잼민이', after: '꼬마 시민', source: 'campaign', count: 234, temperature: null },
-  { before: '왜 맨날 이래', after: '요즘 힘든 일이 있나 보다', source: 'chatbot', count: null, temperature: 45 },
-  { before: '헬육아', after: '성장의 여정', source: 'campaign', count: 187, temperature: null },
-  { before: '오늘 미쳐버릴 뻔했어', after: '오늘 정말 많이 애쓴 하루였다', source: 'chatbot', count: null, temperature: 38 },
-  { before: '또 징징거려', after: '감정을 표현하고 있구나', source: 'crew', count: 92, temperature: 52 },
-  { before: '넌 왜 맨날 안 들어', after: '다시 한번 같이 해볼까?', source: 'crew', count: 67, temperature: 48 },
-  { before: '급식충', after: '학생 친구', source: 'campaign', count: 156, temperature: null },
-  { before: '경단녀', after: '돌봄 전환기', source: 'campaign', count: 134, temperature: null },
+const CATEGORIES = [
+  { key: 'all', label: '전체' },
+  { key: 'parent', label: '부모를 향한 말' },
+  { key: 'child', label: '아이를 향한 말' },
+  { key: 'situation', label: '상황을 표현하는 말' },
 ]
 
+const SORT_OPTIONS = ['최신순', '확정된 말', '인기순']
+
 export default function DictionaryPage() {
-  const [activeFilter, setActiveFilter] = useState('전체')
-  const [activeSort, setActiveSort] = useState('인기순')
+  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeSort, setActiveSort] = useState('최신순')
   const [search, setSearch] = useState('')
 
-  const filterMap = { '캠페인': 'campaign', '챗봇': 'chatbot', '크루': 'crew' }
-
-  const filtered = ENTRIES.filter((e) => {
-    if (activeFilter !== '전체' && e.source !== filterMap[activeFilter]) return false
-    if (search && !e.before.includes(search) && !e.after.includes(search)) return false
+  let filtered = WORDS.filter((e) => {
+    if (activeFilter !== 'all' && e.category !== activeFilter) return false
+    if (search && !e.word.includes(search) && !e.meaning.includes(search)) return false
     return true
   })
 
+  if (activeSort === '확정된 말') {
+    filtered = filtered.filter((e) => !!e.confirmed)
+  } else if (activeSort === '인기순') {
+    filtered = [...filtered].sort((a, b) => (b.votes || 0) - (a.votes || 0))
+  }
+
+  const confirmedCount = WORDS.filter((w) => !!w.confirmed).length
+
   return (
     <div className="mx-auto max-w-lg pb-24">
-      <div className="px-5 pt-6">
-        <h1 className="font-serif text-2xl font-bold text-navy">양육 언어 사전</h1>
-        <p className="mt-1 text-sm text-text-secondary">세 경로의 결과물이 모이는 곳</p>
-      </div>
+      {/* 헤더 */}
+      <div className="bg-gradient-to-b from-navy to-navy-light px-5 pb-7 pt-8 text-white">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-5 w-5 text-gold" />
+          <p className="text-xs font-medium uppercase tracking-wider text-white/60">
+            Malbit Dictionary
+          </p>
+        </div>
+        <h1 className="mt-2 font-serif text-2xl font-bold">양육 언어 사전</h1>
+        <p className="mt-1 text-sm text-white/70">
+          냉소의 말을 다정한 말로 바꿔가는 살아있는 사전
+        </p>
 
-      <div className="px-5 pt-5">
-        <ImpactCounter />
+        <div className="mt-5 grid grid-cols-3 gap-3">
+          <div className="rounded-xl bg-white/10 p-3 text-center">
+            <p className="font-serif text-xl font-bold text-gold">{WORDS.length}</p>
+            <p className="mt-0.5 text-[11px] text-white/70">등록 단어</p>
+          </div>
+          <div className="rounded-xl bg-white/10 p-3 text-center">
+            <p className="font-serif text-xl font-bold text-gold">{confirmedCount}</p>
+            <p className="mt-0.5 text-[11px] text-white/70">확정된 대안</p>
+          </div>
+          <div className="rounded-xl bg-white/10 p-3 text-center">
+            <p className="font-serif text-xl font-bold text-gold">247</p>
+            <p className="mt-0.5 text-[11px] text-white/70">총 참여</p>
+          </div>
+        </div>
       </div>
 
       {/* 검색 */}
@@ -55,48 +76,52 @@ export default function DictionaryPage() {
         </div>
       </div>
 
-      {/* 필터 + 정렬 */}
-      <div className="flex items-center justify-between px-5 pt-4">
-        <div className="flex gap-1.5">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setActiveFilter(f)}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
-                activeFilter === f
-                  ? 'bg-navy text-white'
-                  : 'bg-cream-dark text-text-secondary hover:bg-border'
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-        <div className="flex gap-1">
-          {SORT_OPTIONS.map((s) => (
-            <button
-              key={s}
-              onClick={() => setActiveSort(s)}
-              className={`text-xs ${activeSort === s ? 'font-semibold text-navy' : 'text-text-muted'}`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
+      {/* 카테고리 필터 */}
+      <div className="flex gap-1.5 overflow-x-auto px-5 pt-4">
+        {CATEGORIES.map((c) => (
+          <button
+            key={c.key}
+            onClick={() => setActiveFilter(c.key)}
+            className={`whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              activeFilter === c.key
+                ? 'bg-navy text-white'
+                : 'border border-border bg-white text-text-secondary hover:border-navy/30'
+            }`}
+          >
+            {c.label}
+            <span className="ml-1 text-[10px] opacity-60">
+              {c.key === 'all'
+                ? WORDS.length
+                : WORDS.filter((w) => w.category === c.key).length}
+            </span>
+          </button>
+        ))}
       </div>
 
-      {/* 항목 리스트 */}
-      <div className="space-y-3 px-5 pt-4">
-        {filtered.map((entry, i) => (
-          <ReframingCard
-            key={i}
-            before={entry.before}
-            after={entry.after}
-            temperature={entry.temperature}
-            source={entry.source}
-            count={entry.count}
-          />
+      {/* 정렬 */}
+      <div className="flex items-center justify-end gap-3 px-5 pt-3">
+        {SORT_OPTIONS.map((s) => (
+          <button
+            key={s}
+            onClick={() => setActiveSort(s)}
+            className={`text-xs ${
+              activeSort === s ? 'font-bold text-navy' : 'text-text-muted'
+            }`}
+          >
+            {s}
+          </button>
         ))}
+      </div>
+
+      {/* 단어 카드 리스트 */}
+      <div className="space-y-3 px-5 pt-4">
+        {filtered.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-white py-12 text-center">
+            <p className="text-sm text-text-muted">검색 결과가 없습니다</p>
+          </div>
+        ) : (
+          filtered.map((entry) => <WordCard key={entry.id} entry={entry} />)
+        )}
       </div>
     </div>
   )

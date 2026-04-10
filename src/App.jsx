@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import FloatingButton from './components/FloatingButton'
@@ -11,6 +11,9 @@ import CrewPage from './pages/CrewPage'
 
 export default function App() {
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false)
+  const location = useLocation()
+  // 메인 페이지에는 인라인 측정이 있으므로 플로팅 버튼 숨김
+  const showFloating = location.pathname !== '/'
 
   return (
     <div className="min-h-screen bg-cream">
@@ -23,7 +26,7 @@ export default function App() {
           <Route path="/crew" element={<CrewPage />} />
         </Routes>
       </main>
-      <FloatingButton onClick={() => setBottomSheetOpen(true)} />
+      {showFloating && <FloatingButton onClick={() => setBottomSheetOpen(true)} />}
       <BottomSheet isOpen={isBottomSheetOpen} onClose={() => setBottomSheetOpen(false)} />
     </div>
   )
